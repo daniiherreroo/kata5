@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 public class Kata5 {
 
     public static void main(String[] args) throws SQLException {
-        selectAll();
+        createTableEmail();
     }
     
     private static Connection connection(){
@@ -24,20 +24,15 @@ public class Kata5 {
         return con;
     }
     
-    public static void selectAll() throws SQLException{
-        String sql = "SELECT * FROM PEOPLE";
+    public static void createTableEmail() throws SQLException{
+        String sql = "create table EMAIL ('Id' integer primary key autoincrement, 'Mail' text not null);";
         
-        try(
+        try{
             Connection con = connection();
             Statement stat = con.createStatement();
-            ResultSet rs = stat.executeQuery(sql)){
-            
-            while (rs.next()){
-                System.out.println(rs.getInt("Id") + "\t" +
-                                   rs.getString("Name") + "\t" + 
-                                   rs.getString("Apellidos") + "\t" +
-                                   rs.getString("Departamento") + "\t");
-            }
+            ResultSet rs = stat.executeQuery(sql);
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
         }
     }
 }
